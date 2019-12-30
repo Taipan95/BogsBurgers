@@ -1,0 +1,10 @@
+@import "./components/Layout/Layout.scss";
+@import "./components/Burger/BurgerIngredients/BurgerIngredient.scss";
+@import "./components/Burger/BuildControls/BuildControl/BuildControl.scss";
+@import "./components/Burger/BuildControls/BuildControls.scss";
+@import "./components/Burger/Burger.scss";
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "Open Sans", sans-serif;
+}

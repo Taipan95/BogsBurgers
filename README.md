@@ -1,3 +1,2 @@
 ### Bog's Burgers
-## thats it
-## nothing else
+### thats it, nothing else

@@ -5,7 +5,9 @@ import { INGREDIENT_TYPES, IngredientTypes } from "../../../types/types";
 interface IBuildControls {
 	add: (e: IngredientTypes) => void;
 	remove: (e: IngredientTypes) => void;
-	disabled: any;
+	disabled?: any;
+	price: number;
+	order: boolean;
 }
 const controls = [
 	{ label: "Salad", type: INGREDIENT_TYPES.salad },
@@ -14,9 +16,18 @@ const controls = [
 	{ label: "Meat", type: INGREDIENT_TYPES.meat }
 ];
 
-const BuildControls = ({ add, remove, disabled }: IBuildControls) => {
+const BuildControls = ({
+	add,
+	remove,
+	disabled,
+	price,
+	order
+}: IBuildControls) => {
 	return (
 		<div className="build-controls">
+			<p>
+				Total: <strong>{price.toFixed(2)}€</strong>
+			</p>
 			{controls.map(control => (
 				<BuildControl
 					add={add.bind(null, control.type)}
@@ -26,6 +37,9 @@ const BuildControls = ({ add, remove, disabled }: IBuildControls) => {
 					disabled={disabled[control.type]}
 				/>
 			))}
+			<button className="order-button" disabled={!order}>
+				ORDER NEVER
+			</button>
 		</div>
 	);
 };

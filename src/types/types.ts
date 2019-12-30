@@ -13,8 +13,3 @@ export enum INGREDIENT_PRICES {
 	"bacon" = 0.6
 }
 export type IngredientPrices = keyof typeof INGREDIENT_PRICES;
-
-export type Ingredient = {
-	type: IngredientTypes;
-	amount: number;
-};

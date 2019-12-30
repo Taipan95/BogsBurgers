@@ -5,72 +5,77 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import { INGREDIENT_PRICES, IngredientTypes } from "../../types/types";
 interface IBurgerBuilder {
-	props?: any;
+  props?: any;
 }
 
 const BurgerBuilder = ({ props }: IBurgerBuilder) => {
-	const [ingredients, setIngredients] = useState<any>({});
-	const [disabledInfo, setDisabledInfo] = useState<boolean | any>({
-		...ingredients
-	});
-	const [totalPrice, setTotalPrice] = useState(4);
+  const [ingredients, setIngredients] = useState<any>({
+    salad: 0,
+    meat: 0,
+    cheese: 3,
+    bacon: 0
+  });
+  const disabledInfo = {
+    ...ingredients
+  };
+  useEffect(() => {
+    for (const key in ingredients) {
+      if (ingredients[key] === undefined) {
+        // setIngredients((ingredients[key] = 0));
+        setIngredients((ingredients[key] = 0));
+      }
+      console.log(key, ingredients[key]);
 
-	useEffect(() => {
-		for (const key in ingredients) {
-			if (!ingredients[key]) {
-				setIngredients((ingredients[key] = 0));
-				setDisabledInfo((disabledInfo[key] = true));
-			}
-			if (ingredients[key] === 0) {
-				setDisabledInfo((disabledInfo[key] = true));
-			} else setDisabledInfo((disabledInfo[key] = false));
-		}
-	}, [disabledInfo]);
+      disabledInfo[key] = ingredients[key] === 0;
+      console.log(key, disabledInfo[key]);
+    }
+  }, [ingredients, disabledInfo]);
 
-	const addIngredient = (type: IngredientTypes) => {
-		let oldCount = ingredients[type];
-		if (!oldCount) {
-			oldCount = 0;
-			setDisabledInfo((disabledInfo[type] = true));
-		} else {
-			setDisabledInfo((disabledInfo[type] = false));
-		}
-		const updatedCount = oldCount + 1;
-		const updatedIngredients = { ...ingredients };
-		updatedIngredients[type] = updatedCount;
-		setIngredients(updatedIngredients);
+  const [totalPrice, setTotalPrice] = useState(3);
 
-		setTotalPrice(totalPrice + INGREDIENT_PRICES[type]);
-	};
-	const removeIngredient = (type: IngredientTypes) => {
-		const oldCount = ingredients[type];
+  const addIngredient = (type: IngredientTypes) => {
+    let oldCount = ingredients[type];
+    if (!oldCount) {
+      oldCount = 0;
+    }
+    const updatedCount = oldCount + 1;
+    disabledInfo[type] = updatedCount <= 0;
+    const updatedIngredients = { ...ingredients };
+    updatedIngredients[type] = updatedCount;
+    setIngredients(updatedIngredients);
 
-		if (!oldCount) {
-			const updatedIngredients = { ...ingredients };
-			updatedIngredients[type] = 0;
-			setIngredients(updatedIngredients);
-			return;
-		} else {
-			setDisabledInfo((disabledInfo[type] = false));
-		}
-		const updatedCount = oldCount - 1;
+    setTotalPrice(totalPrice + INGREDIENT_PRICES[type]);
+  };
+  const removeIngredient = (type: IngredientTypes) => {
+    const oldCount = ingredients[type];
 
-		const updatedIngredients = { ...ingredients };
-		updatedIngredients[type] = updatedCount;
-		setIngredients(updatedIngredients);
+    if (!oldCount) {
+      const updatedIngredients = { ...ingredients };
+      updatedIngredients[type] = 0;
+      setIngredients(updatedIngredients);
+      return;
+    }
 
-		setTotalPrice(totalPrice - INGREDIENT_PRICES[type]);
-	};
+    const updatedCount = oldCount - 1;
+    disabledInfo[type] = updatedCount <= 0;
 
-	return (
-		<Aux>
-			<Burger ingredients={ingredients} />
-			<BuildControls
-				add={addIngredient}
-				remove={removeIngredient}
-				disabled={disabledInfo}
-			/>
-		</Aux>
-	);
+    const updatedIngredients = { ...ingredients };
+    updatedIngredients[type] = updatedCount;
+    setIngredients(updatedIngredients);
+
+    setTotalPrice(totalPrice - INGREDIENT_PRICES[type]);
+  };
+
+  return (
+    <Aux>
+      <Burger ingredients={ingredients} />
+      <div>Price: {totalPrice.toPrecision(3)} €</div>
+      <BuildControls
+        add={addIngredient}
+        remove={removeIngredient}
+        disabled={disabledInfo}
+      />
+    </Aux>
+  );
 };
 export default BurgerBuilder;

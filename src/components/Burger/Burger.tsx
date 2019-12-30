@@ -16,7 +16,6 @@ const Burger = ({ ingredients }: IBurger) => {
 			return previousValue.concat(currentValue);
 		}, []);
 
-	console.log(transformedIngredients);
 	if (transformedIngredients.length === 0) {
 		transformedIngredients.push(
 			<p key={Math.random()}>Start Adding Ingredients</p>

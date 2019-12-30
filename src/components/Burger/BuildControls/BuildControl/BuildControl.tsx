@@ -2,16 +2,20 @@ import React from "react";
 
 interface IBuildControl {
 	label: string;
-	add: (e: string) => void;
+	add: () => void;
+	remove: () => void;
+	disabled: any;
 }
-const BuildControl = ({ label, add }: IBuildControl) => {
+const BuildControl = ({ label, add, remove, disabled }: IBuildControl) => {
 	return (
 		<div className="build-control">
 			<div className="label">{label}</div>
-			<button onClick={add.bind(null, label)} className="less">
+			<button className="less" onClick={remove} disabled={disabled}>
 				Less
 			</button>
-			<button className="more">More</button>
+			<button className="more" onClick={add}>
+				More
+			</button>
 		</div>
 	);
 };

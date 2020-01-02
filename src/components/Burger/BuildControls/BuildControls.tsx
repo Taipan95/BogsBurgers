@@ -2,9 +2,10 @@ import React from "react";
 import BuildControl from "./BuildControl/BuildControl";
 import { INGREDIENT_TYPES, IngredientTypes } from "../../../types/types";
 
-interface IBuildControls {
+interface IProps {
 	add: (e: IngredientTypes) => void;
 	remove: (e: IngredientTypes) => void;
+	ordered: () => void;
 	disabled?: any;
 	price: number;
 	order: boolean;
@@ -20,9 +21,10 @@ const BuildControls = ({
 	add,
 	remove,
 	disabled,
+	ordered,
 	price,
 	order
-}: IBuildControls) => {
+}: IProps) => {
 	return (
 		<div className="build-controls">
 			<p>
@@ -37,7 +39,11 @@ const BuildControls = ({
 					disabled={disabled[control.type]}
 				/>
 			))}
-			<button className="order-button" disabled={!order}>
+			<button
+				className="order-button"
+				disabled={!order}
+				onClick={ordered}
+			>
 				ORDER NEVER
 			</button>
 		</div>

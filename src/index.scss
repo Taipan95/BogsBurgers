@@ -1,0 +1,20 @@
+@import "../src/styles/Layout.scss";
+@import "../src/styles/BurgerIngredient.scss";
+@import "../src/styles/BuildControl.scss";
+@import "../src/styles/BuildControls.scss";
+@import "../src/styles/Burger.scss";
+@import "../src/styles/Modal.scss";
+@import "../src/styles/Backdrop.scss";
+@import "../src/styles/Button.scss";
+@import "../src/styles/Toolbar.scss";
+@import "../src/styles/Logo.scss";
+@import "../src/styles/Link.scss";
+@import "../src/styles/NavigationItems.scss";
+@import "../src/styles/SideDrawer.scss";
+@import "../src//styles/DrawerToggle.scss";
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "Open Sans", sans-serif;
+}

@@ -1,11 +1,11 @@
 import React from "react";
 import BurgerIngredient from "./BurgerIngredients/BurgerIngredient";
 
-interface IBurger {
+interface IProps {
 	ingredients: any;
 }
 
-const Burger = ({ ingredients }: IBurger) => {
+const Burger = ({ ingredients }: IProps) => {
 	let transformedIngredients = Object.keys(ingredients)
 		.map((igKey: string) => {
 			return [...Array(ingredients[igKey])].map((_, i) => (

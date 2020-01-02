@@ -1,18 +1,28 @@
-import React from "react";
-import Aux from "../../hoc/Aux";
+import React, { useState } from "react";
 import classNames from "classnames";
-interface ILayoutProps {
+import Toolbar from "../Navigation/Toolbar/Toolbar";
+import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
+interface IProps {
 	children: any;
 }
 
-const layout = ({ children }: ILayoutProps) => {
+const Layout = ({ children }: IProps) => {
+	const [drawerVisible, setDrawerVisible] = useState(false);
+	const closeSideDrawer = () => {
+		setDrawerVisible(false);
+	};
+
+	const toggleSideDrawer = () => {
+		setDrawerVisible(!drawerVisible);
+	};
 	const classes = classNames("content");
 	return (
-		<Aux>
-			<div>Toolbar, SideDrawer, Backdrop</div>
+		<>
+			<Toolbar menuClick={toggleSideDrawer} />
+			<SideDrawer open={drawerVisible} closeDrawer={closeSideDrawer} />
 			<main className={classes}>{children}</main>
-		</Aux>
+		</>
 	);
 };
 
-export default layout;
+export default Layout;

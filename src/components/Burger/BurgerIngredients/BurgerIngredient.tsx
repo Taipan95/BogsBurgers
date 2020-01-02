@@ -1,9 +1,9 @@
 import React from "react";
 
-interface IBurgerIngredient {
+interface IProps {
 	type: string;
 }
-const BurgerIngredient = ({ type }: IBurgerIngredient) => {
+const BurgerIngredient = ({ type }: IProps) => {
 	let ingredient = null;
 	switch (type) {
 		case "bread-bottom":

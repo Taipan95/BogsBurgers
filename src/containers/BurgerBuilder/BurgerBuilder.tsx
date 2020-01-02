@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import Aux from "../../hoc/Aux";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import { IngredientTypes, INGREDIENT_PRICES } from "../../types/types";
+import Modal from "../../components/UI/Modal";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
-interface IBurgerBuilder {
+interface IProps {
 	props?: any;
 }
 
-const BurgerBuilder = ({ props }: IBurgerBuilder) => {
+const BurgerBuilder = ({ props }: IProps) => {
 	const [ingredients, setIngredients] = useState<any>({
 		salad: 0,
 		cheese: 0,
@@ -17,6 +18,7 @@ const BurgerBuilder = ({ props }: IBurgerBuilder) => {
 	});
 	const [totalPrice, setTotalPrice] = useState(3);
 	const [purchaseable, setPurchaseable] = useState(false);
+	const [purchasing, setPurchasing] = useState(false);
 	const disabledInfo = { ...ingredients };
 
 	const updatePurchaseState = (ingredients: any) => {
@@ -54,11 +56,31 @@ const BurgerBuilder = ({ props }: IBurgerBuilder) => {
 		setTotalPrice(totalPrice - INGREDIENT_PRICES[type]);
 		updatePurchaseState(updatedState);
 	};
+
+	const purchaseHandler = () => {
+		setPurchasing(true);
+	};
+	const modalCloseHandler = () => {
+		setPurchasing(false);
+	};
+
+	const purchaseContinue = () => {
+		alert("Bogdanoff, he did it.");
+	};
 	for (const key in disabledInfo) {
 		disabledInfo[key] = disabledInfo[key] <= 0;
 	}
 	return (
-		<Aux>
+		<>
+			<Modal isVisible={purchasing} modalClosed={modalCloseHandler}>
+				<OrderSummary
+					ingredients={ingredients}
+					cancelOrder={modalCloseHandler}
+					continueOrder={purchaseContinue}
+					price={totalPrice}
+				/>
+			</Modal>
+
 			<Burger ingredients={ingredients} />
 			<BuildControls
 				add={addIngredient}
@@ -66,8 +88,9 @@ const BurgerBuilder = ({ props }: IBurgerBuilder) => {
 				disabled={disabledInfo}
 				price={totalPrice}
 				order={purchaseable}
+				ordered={purchaseHandler}
 			/>
-		</Aux>
+		</>
 	);
 };
 

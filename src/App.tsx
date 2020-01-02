@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "./components/Layout/Layout";
+import Layout from "./containers/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 
-const App: React.FC = () => {
+export default function App() {
 	return (
 		<div>
 			<Layout>
@@ -10,6 +10,4 @@ const App: React.FC = () => {
 			</Layout>
 		</div>
 	);
-};
-
-export default App;
+}

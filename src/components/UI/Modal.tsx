@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Backdrop from "./Backdrop";
 
 interface IProps {
@@ -6,7 +6,13 @@ interface IProps {
 	isVisible: any;
 	modalClosed: any;
 }
-export default function Modal({ children, isVisible, modalClosed }: IProps) {
+const Modal = ({ children, isVisible, modalClosed }: IProps) => {
+	const didMountRef = useRef(false);
+	useEffect(() => {
+		if (didMountRef.current) {
+			console.log("[Modal]: Will Update");
+		} else didMountRef.current = true;
+	}, [children]);
 	return (
 		<>
 			<Backdrop isVisible={isVisible} onClick={modalClosed} />
@@ -23,4 +29,5 @@ export default function Modal({ children, isVisible, modalClosed }: IProps) {
 			</div>
 		</>
 	);
-}
+};
+export default React.memo(Modal);

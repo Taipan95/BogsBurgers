@@ -3,14 +3,13 @@ import Backdrop from "./Backdrop";
 
 interface IProps {
 	children: any;
-	isVisible: any;
-	modalClosed: any;
+	isVisible?: any;
+	modalClosed?: any;
 }
 const Modal = ({ children, isVisible, modalClosed }: IProps) => {
 	const didMountRef = useRef(false);
 	useEffect(() => {
 		if (didMountRef.current) {
-			console.log("[Modal]: Will Update");
 		} else didMountRef.current = true;
 	}, [children]);
 	return (

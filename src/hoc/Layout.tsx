@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classNames from "classnames";
-import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
-import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
+import Toolbar from "../components/Navigation/Toolbar/Toolbar";
+import SideDrawer from "../components/Navigation/SideDrawer/SideDrawer";
 interface IProps {
 	children: any;
 }

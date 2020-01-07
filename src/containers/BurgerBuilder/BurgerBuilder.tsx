@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
-import { IngredientTypes, INGREDIENT_PRICES } from "../../types/types";
+import { IngredientTypes, INGREDIENT_PRICES, IProps } from "../../types/types";
 import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
 import Spinner from "../../components/UI/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler";
-const BurgerBuilder = () => {
-	const [ingredients, setIngredients] = useState<any>();
+
+const BurgerBuilder = ({ match, history }: IProps) => {
+	const [ingredients, setIngredients] = useState<any>(null);
 	const [totalPrice, setTotalPrice] = useState(3);
 	const [purchaseable, setPurchaseable] = useState(false);
 	const [purchasing, setPurchasing] = useState(false);
@@ -67,34 +68,15 @@ const BurgerBuilder = () => {
 	};
 
 	const purchaseContinue = () => {
-		setLoading(true);
-		const order = {
-			ingredients: ingredients,
-			price: totalPrice,
-			customer: {
-				name: "Kostis",
-				address: {
-					street: "McPuckpuck 69",
-					zipCode: "5102",
-					country: "Neverland"
-				},
-				email: "kostis@nothingbutvegans.com"
-			},
-			deliveryMethod: "Pidgeon Post"
-		};
-
-		axios
-			.post("/orders.json", order)
-			.then(response => {
-				setLoading(false);
-				setPurchasing(false);
-				return response;
-			})
-			.catch(error => {
-				setLoading(false);
-				setPurchasing(false);
-				return error;
-			});
+		const queryParams = [];
+		for (const i in ingredients) {
+			queryParams.push(
+				encodeURIComponent(i) + "=" + encodeURIComponent(ingredients[i])
+			);
+		}
+		queryParams.push("price=" + totalPrice);
+		const queryString = queryParams.join("&");
+		history.push({ pathname: "/checkout", search: "?" + queryString });
 	};
 	for (const key in disabledInfo) {
 		disabledInfo[key] = disabledInfo[key] <= 0;

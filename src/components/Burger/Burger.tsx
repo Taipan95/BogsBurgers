@@ -6,17 +6,19 @@ interface IProps {
 }
 
 const Burger = ({ ingredients }: IProps) => {
-	let transformedIngredients = Object.keys(ingredients)
-		.map((igKey: string) => {
-			return [...Array(ingredients[igKey])].map((_, i) => (
-				<BurgerIngredient key={igKey + i} type={igKey} />
-			));
-		})
-		.reduce((previousValue, currentValue) => {
-			return previousValue.concat(currentValue);
-		}, []);
+	let transformedIngredients = ingredients
+		? Object.keys(ingredients)
+				.map((igKey: string) => {
+					return [...Array(ingredients[igKey])].map((_, i) => (
+						<BurgerIngredient key={igKey + i} type={igKey} />
+					));
+				})
+				.reduce((previousValue, currentValue) => {
+					return previousValue.concat(currentValue);
+				}, [])
+		: null;
 
-	if (transformedIngredients.length === 0) {
+	if (transformedIngredients && transformedIngredients.length === 0) {
 		transformedIngredients.push(
 			<p key={Math.random()}>Start Adding Ingredients</p>
 		);

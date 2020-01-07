@@ -4,10 +4,10 @@ interface IProps {}
 export default function NavigationItems(props: IProps) {
 	return (
 		<ul className="navigation-items">
-			<Link linkTo="/" active>
+			<Link isExactEnabled linkTo="/">
 				Burger Builder
 			</Link>
-			<Link linkTo="/">Checkout</Link>
+			<Link linkTo="/orders">Orders</Link>
 		</ul>
 	);
 }

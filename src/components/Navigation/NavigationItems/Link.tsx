@@ -1,16 +1,17 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 interface IProps {
 	linkTo: string;
 	children?: any;
-	active?: boolean;
+	isExactEnabled?: boolean;
 }
-export default function Link({ linkTo, children, active }: IProps) {
+export default function Link({ linkTo, children, isExactEnabled }: IProps) {
 	return (
 		<li className="link">
-			<a href={linkTo} className={active ? "active" : ""}>
+			<NavLink exact={isExactEnabled} to={linkTo}>
 				{children}
-			</a>
+			</NavLink>
 		</li>
 	);
 }

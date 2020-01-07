@@ -1,3 +1,5 @@
+import { RouteChildrenProps } from "react-router-dom";
+
 export enum INGREDIENT_TYPES {
 	salad = "salad",
 	cheese = "cheese",
@@ -13,3 +15,8 @@ export enum INGREDIENT_PRICES {
 	"bacon" = 0.6
 }
 export type IngredientPrices = keyof typeof INGREDIENT_PRICES;
+
+export interface IProps extends RouteChildrenProps {
+	props?: any;
+	children?: any;
+}
